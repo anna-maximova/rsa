@@ -3,124 +3,53 @@ import random
 import numpy as np
 import re
 
-ASCII_list = np.array([['032', ' '], 
-                        ['033' , '!'],
-                        ['034' , '"'],
-                        ['035' , '#'],
-                        ['036' , '$'],
-                        ['037' , '%'],
-                        ['038' , '&'],
-                        ['039' , "'"],
-                        ['040' , '('],
-                        ['041' , ')'],
-                        ['042' , '*'],
-                        ['043' , '+'],
-                        ['044' , ','],
-                        ['045' , '-'],
-                        ['046' , '.'],
-                        ['047' , '/'],
-                        ['048' , '0'],
-                        ['049' , '1'],
-                        ['050' , '2'],
-                        ['051' , '3'],
-                        ['052' , '4'],
-                        ['053' , '5'],
-                        ['054' , '6'],
-                        ['055' , '7'],
-                        ['056' , '8'],
-                        ['057' , '9'],
-                        ['058' , ':'],
-                        ['059' , ';'],
-                        ['060' , '<'],
-                        ['061' , '='],
-                        ['062' , '>'],
-                        ['063' , '?'],
-                        ['064' , '@'],
-                        ['065' , 'A'],
-                        ['066' , 'B'],
-                        ['067' , 'C'],
-                        ['068' , 'D'],
-                        ['069' , 'E'],
-                        ['070' , 'F'],
-                        ['071' , 'G'],
-                        ['072' , 'H'],
-                        ['073' , 'I'],
-                        ['074' , 'K'],
-                        ['075' , 'L'],
-                        ['076' , 'M'],
-                        ['077' , 'N'],
-                        ['078' , 'O'],
-                        ['079' , 'P'],
-                        ['081' , 'Q'],
-                        ['082' , 'R'],
-                        ['083' , 'S'],
-                        ['084' , 'T'],
-                        ['085' , 'U'],
-                        ['086' , 'V'],
-                        ['087' , 'W'],
-                        ['088' , 'X'],
-                        ['089' , 'Y'],
-                        ['090' , 'Z'],
-                        ['091' , '['],
-                        ['092' , '\\'],
-                        ['093' , ']'],
-                        ['094' , '^'],
-                        ['095' , '_'],
-                        ['096' , '`'],
-                        ['097' , 'a'],
-                        ['098' , 'b'],
-                        ['099' , 'c'],
-                        ['100' , 'd'],
-                        ['101' , 'e'],
-                        ['102' , 'f'],
-                        ['103' , 'g'],
-                        ['104' , 'h'],
-                        ['105' , 'i'],
-                        ['106' , 'j'],
-                        ['107' , 'k'],
-                        ['108' , 'l'],
-                        ['109' , 'm'],
-                        ['110' , 'n'],
-                        ['111' , 'o'],
-                        ['112' , 'p'],
-                        ['113' , 'q'],
-                        ['114' , 'r'],
-                        ['115' , 's'],
-                        ['116' , 't'],
-                        ['117' , 'u'],
-                        ['118' , 'v'],
-                        ['119' , 'w'],
-                        ['120' , 'x'],
-                        ['121' , 'y'],
-                        ['122' , 'z'],
-                        ['123' , '{'],
-                        ['124' , '|'],
-                        ['125' , '}'],
-                        ['126' , '~']])
+ASCII_to_String_list = {'032' : ' ', '033' : '!', '034' : '"', '035' : '#', '036' : '$', '037' : '%', 
+                        '038' : '&', '039' : "'", '040' : '(', '041' : ')', '042' : '*', '043' : '+', 
+                        '044' : ',', '045' : '-', '046' : '.', '047' : '/', '048' : '0', '049' : '1',
+                        '050' : '2', '051' : '3', '052' : '4', '053' : '5', '054' : '6', '055' : '7',
+                        '056' : '8', '057' : '9', '058' : ':', '059' : ';', '060' : '<', '061' : '=',
+                        '062' : '>', '063' : '?', '064' : '@', '065' : 'A', '066' : 'B', '067' : 'C',
+                        '068' : 'D', '069' : 'E', '070' : 'F', '071' : 'G', '072' : 'H', '073' : 'I',
+                        '074' : 'J', '075' : 'K', '076' : 'L', '077' : 'M', '078' : 'N', '079' : 'O', 
+                        '080' : 'P', '081' : 'Q', '082' : 'R', '083' : 'S', '084' : 'T', '085' : 'U', 
+                        '086' : 'V', '087' : 'W', '088' : 'X', '089' : 'Y', '090' : 'Z', '091' : '[', 
+                        '092' : '\\', '093' : ']', '094' : '^', '095' : '_', '096' : '`', '097' : 'a',
+                        '098' : 'b', '099' : 'c', '100' : 'd', '101' : 'e', '102' : 'f', '103' : 'g', 
+                        '104' : 'h', '105' : 'i', '106' : 'j', '107' : 'k', '108' : 'l', '109' : 'm', 
+                        '110' : 'n', '111' : 'o', '112' : 'p', '113' : 'q', '114' : 'r', '115' : 's', 
+                        '116' : 't', '117' : 'u', '118' : 'v', '119' : 'w', '120' : 'x', '121' : 'y', 
+                        '122' : 'z', '123' : '{', '124' : '|', '125' : '}', '126' : '~'}
+
+String_to_ASCII_list = {' ' : '032', '!' : '033', '"' : '034', '#' : '035', '$' : '036', '%' : '037', 
+                        '&' : '038', "'" : '039', '(' : '040', ')' : '041', '*' : '042', '+' : '043', 
+                        ',' : '044', '-' : '045', '.' : '046', '/' : '047', '0' : '048', '1' : '049',
+                        '2' : '050', '3' : '051', '4' : '052', '5' : '053', '6' : '054', '7' : '055',
+                        '8' : '056', '9' : '057', ':' : '058', ';' : '059', '<' : '060', '=' : '061',
+                        '>' : '062', '?' : '063', '@' : '064', 'A' : '065', 'B' : '066', 'C' : '067',
+                        'D' : '068', 'E' : '069', 'F' : '070', 'G' : '071', 'H' : '072', 'I' : '073',
+                        'J' : '074', 'K' : '075', 'L' : '076', 'M' : '077', 'N' : '078', 'O' : '079', 
+                        'P' : '080', 'Q' : '081', 'R' : '082', 'S' : '083', 'T' : '084', 'U' : '085',
+                        'V' : '086', 'W' : '087', 'X' : '088', 'Y' : '089', 'Z' : '090', '[' : '091', 
+                        '\\' : '092', ']' : '093', '^' : '094', '_' : '095', '`' : '096', 'a' : '097',
+                        'b' : '098', 'c' : '099', 'd' : '100', 'e' : '101', 'f' : '102', 'g' : '103', 
+                        'h' : '104', 'i' : '105', 'j' : '106', 'k' : '107', 'l' : '108', 'm' : '109', 
+                        'n' : '110', 'o' : '111', 'p' : '112', 'q' : '113', 'r' : '114', 's' : '115',
+                        't' : '116', 'u' : '117', 'v' : '118', 'w' : '119', 'x' : '120', 'y' : '121', 
+                        'z' : '122', '{' : '123', '|' : '124', '}' : '125', '~' : '126'}
 
 def StringToASCII(string):
     array = list(string)
-    ascii = ['1']
+    number = '1'
     for i in array:
-        for j in range(94):
-            if i == ASCII_list[j][1]:
-                ascii.append(ASCII_list[j][0])
-    number = ''
-    for i in ascii:
-        number += i
+        number += String_to_ASCII_list[i]
     return int(number)
 
 def ASCIIToString(number):
     string = str(number)[1:]
     array = re.findall('...', string)
-    characters = ['']
-    for i in array:
-        for j in range(94):
-            if i == ASCII_list[j][0]:
-                characters.append(ASCII_list[j][1])
     string = ''
-    for i in characters:
-        string += i
+    for i in array:
+        string += ASCII_to_String_list[i]
     return string
 
 def GenPrivatePublicKeys():
@@ -146,9 +75,9 @@ def RandomOddNumber(bits):
     N = [1] * bits
     for i in range(1, bits - 1):
         N[i] = random.randint(0,1)
-    return BinaryDigitsToInteger(N)
+    return BinaryToInteger(N)
 
-def BinaryDigitsToInteger(N):
+def BinaryToInteger(N):
     n = 0
     pow2 = 1
     for i in reversed(range(len(N))):
@@ -184,7 +113,7 @@ def DecryptionExponent(prime1, prime2, e):
     d = ExtendedEuclidianAlgorithm(phi, e)
     return int(d)
 
-def EuclideanAlgorithm(a, b):  #returns matrix
+def EuclideanAlgorithm(a, b):  
     matrix = np.array([[a, b, a // b, a % b]])
     i = 0
     while matrix[i, 3] != 0:
@@ -216,18 +145,20 @@ def DecryptMessage(encryptedmessage, d, N):
     decryptedmessage = pow(encryptedmessage, d, N)
     return decryptedmessage
 
-choice = input('encrypt or decrypt: ')
+if __name__ == '__main__':
+    choice = input('encrypt or decrypt: ')
 
-if choice == 'decrypt':
-    privatekey, publickey = GenPrivatePublicKeys()
-    print('N: ' + str(publickey[0]))
-    print('encryption exponent: ' + str(publickey[1]))
-    encryptedmessage = int(input('message to decrypt: '))
-    asciimessage = DecryptMessage(encryptedmessage, privatekey[1], privatekey[0])
-    print(ASCIIToString(asciimessage))
-elif choice == 'encrypt':
-    message = input('message to encrypt: ')
-    asciimessage = StringToASCII(message)
-    N = int(input('N: '))
-    e = int(input('encryption exponent: '))
-    print(EncryptMesage(asciimessage, e, N))
+    if choice == 'decrypt':
+        privatekey, publickey = GenPrivatePublicKeys()
+        print('N: ' + str(publickey[0]))
+        print('encryption exponent: ' + str(publickey[1]))
+        encryptedmessage = int(input('message to decrypt: '))
+        asciimessage = DecryptMessage(encryptedmessage, privatekey[1], privatekey[0])
+        print(ASCIIToString(asciimessage))
+
+    elif choice == 'encrypt':
+        message = input('message to encrypt: ')
+        asciimessage = StringToASCII(message)
+        N = int(input('N: '))
+        e = int(input('encryption exponent: '))
+        print(EncryptMesage(asciimessage, e, N))
