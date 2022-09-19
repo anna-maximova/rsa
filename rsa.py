@@ -1,3 +1,6 @@
+# Run file on two separate terminals, select encrypt on one and decrypt on the other and 
+# use the encryption integers provided by decryption window to encrypt your message. Then
+# input your encrypted message in to decryption window to decrypt.
 
 import random
 import numpy as np
