@@ -41,19 +41,17 @@ String_to_ASCII_list = {' ' : '032', '!' : '033', '"' : '034', '#' : '035', '$' 
                         'z' : '122', '{' : '123', '|' : '124', '}' : '125', '~' : '126'}
 
 def StringToASCII(string):
-    array = list(string)
     number = '1'
-    for i in array:
-        number += String_to_ASCII_list[i]
+    for c in string:
+        number += String_to_ASCII_list[c]
     return int(number)
 
 def ASCIIToString(number):
-    string = str(number)[1:]
-    array = re.findall('...', string)
-    string = ''
-    for i in array:
-        string += ASCII_to_String_list[i]
-    return string
+    array = re.findall('...', str(number)[1:])
+    strings = []
+    for c in array:
+        strings.append(ASCII_to_String_list[c])
+    return ''.join(strings)
 
 def GenPrivatePublicKeys():
     prime1 = GenerateProbablePrime(1000)
@@ -65,14 +63,10 @@ def GenPrivatePublicKeys():
     return privatekey, publickey
 
 def GenerateProbablePrime(bits):
-    x = False
-    while x == False:
+    while True:
         n = RandomOddNumber(bits)
         if MillerRabin(n) == True:
-            x = True 
-        else:
-            x = False
-    return n
+            return n
 
 def RandomOddNumber(bits):
     N = [1] * bits
@@ -83,8 +77,8 @@ def RandomOddNumber(bits):
 def BinaryToInteger(N):
     n = 0
     pow2 = 1
-    for i in reversed(range(len(N))):
-        n += pow2 * N[i]
+    for i in reversed(N):
+        n += pow2 * i
         pow2 *= 2
     return n
 
